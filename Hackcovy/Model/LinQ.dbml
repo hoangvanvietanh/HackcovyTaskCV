@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Hackcovy" Class="LinQDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-MALEMT7\SUNSHINE;Initial Catalog=Hackcovy;Integrated Security=True" SettingsObjectName="Hackcovy.Properties.Settings" SettingsPropertyName="HackcovyConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Schedule" Member="Schedules">
+    <Type Name="Schedule">
+      <Column Name="UniqueID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Type" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="AllDay" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Subject" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Label" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ResourceID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ResourceIDs" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ReminderInfo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="RecurrenceInfo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="TimeZoneId" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CustomField1" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Resources" Member="Resources">
+    <Type Name="Resource">
+      <Column Name="UniqueID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ResourceID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ResourceName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Color" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Image" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="CustomField1" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HistoryAppointment" Member="HistoryAppointments">
+    <Type Name="HistoryAppointment">
+      <Column Name="idHistoryAppointment" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="time" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="specialist" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="status" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="idUser" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="User_HistoryAppointment" Member="User" ThisKey="idUser" OtherKey="idUser" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="idUser" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="fullName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="phoneNumber" Type="System.String" DbType="NChar(12)" CanBeNull="true" />
+      <Column Name="pictureProfile" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="yearOfBirth" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="gender" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Association Name="User_HistoryAppointment" Member="HistoryAppointments" ThisKey="idUser" OtherKey="idUser" Type="HistoryAppointment" />
+      <Association Name="User_Prescription" Member="Prescriptions" ThisKey="idUser" OtherKey="idUser" Type="Prescription" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Prescription" Member="Prescriptions">
+    <Type Name="Prescription">
+      <Column Name="idPrescription" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="notes" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="diagnostic" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="reExamination" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="date" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idUser" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="emailShare" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Prescription_DrugInPrescription" Member="DrugInPrescriptions" ThisKey="idPrescription" OtherKey="idPrescription" Type="DrugInPrescription" />
+      <Association Name="User_Prescription" Member="User" ThisKey="idUser" OtherKey="idUser" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Drug" Member="Drugs">
+    <Type Name="Drug">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="drugName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="color" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="image" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DrugInPrescription" Member="DrugInPrescriptions">
+    <Type Name="DrugInPrescription">
+      <Column Name="idDrug" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="drugName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="dosage" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="time" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="amountOfMedicine" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idPrescription" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="image" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="color" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Association Name="Prescription_DrugInPrescription" Member="Prescription" ThisKey="idPrescription" OtherKey="idPrescription" Type="Prescription" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.getAllInfoOfUsers" Method="getAllInfoOfUsers">
+    <ElementType Name="getAllInfoOfUsersResult">
+      <Column Name="idUser" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="fullName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="phoneNumber" Type="System.String" DbType="NChar(12)" CanBeNull="true" />
+      <Column Name="pictureProfile" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="idPrescription" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="notes" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="diagnostic" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="reExamination" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="date" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idUser1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idDrug" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="drugName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="dosage" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="time" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="amountOfMedicine" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idPrescription1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="image" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="color" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getPrescriptionById" Method="getPrescriptionById">
+    <Parameter Name="idPrescription" Type="System.Int32" DbType="Int" />
+    <ElementType Name="getPrescriptionByIdResult">
+      <Column Name="idPrescription" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="notes" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="diagnostic" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="reExamination" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="date" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idUser" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getAllPrescription" Method="getAllPrescription">
+    <ElementType Name="getAllPrescriptionResult">
+      <Column Name="idPrescription" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="notes" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="diagnostic" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="reExamination" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="date" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idUser" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getAllUsers" Method="getAllUsers">
+    <ElementType Name="getAllUsersResult">
+      <Column Name="idUser" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="fullName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="phoneNumber" Type="System.String" DbType="NChar(12)" CanBeNull="true" />
+      <Column Name="pictureProfile" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getAllUsersAndPrescription" Method="getAllUsersAndPrescription">
+    <ElementType Name="getAllUsersAndPrescriptionResult">
+      <Column Name="idUser" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="fullName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="phoneNumber" Type="System.String" DbType="NChar(12)" CanBeNull="true" />
+      <Column Name="pictureProfile" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="idPrescription" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="notes" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="diagnostic" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="reExamination" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="date" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idUser1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getDrugInPrescription" Method="getDrugInPrescription">
+    <Parameter Name="idPrescription" Type="System.Int32" DbType="Int" />
+    <ElementType Name="getDrugInPrescriptionResult">
+      <Column Name="idDrug" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="drugName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="dosage" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="time" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="amountOfMedicine" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idPrescription" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="image" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="color" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getPrescriptByIdUser" Method="getPrescriptByIdUser">
+    <Parameter Name="idUser" Type="System.Int32" DbType="Int" />
+    <ElementType Name="getPrescriptByIdUserResult">
+      <Column Name="idPrescription" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="notes" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="diagnostic" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="reExamination" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="date" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idUser" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>
